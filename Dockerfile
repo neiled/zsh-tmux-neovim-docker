@@ -69,7 +69,7 @@ RUN apt-get install -y \
       python3-pip \
       unzip
 RUN pip3 install --upgrade pip &&\ 
-    pip3 install --user neovim jedi mistune psutil setproctitle
+    pip3 install --user neovim jedi mistune psutil setproctitle virtualenvwrapper yolk3k
 WORKDIR /usr/local/src
 RUN git clone --depth 1 https://github.com/neovim/neovim.git
 WORKDIR /usr/local/src/neovim
