@@ -70,6 +70,7 @@ RUN apt-get install -y \
       unzip
 RUN pip3 install --upgrade pip &&\ 
     pip3 install neovim yapf jedi mistune psutil setproctitle virtualenvwrapper yolk3k
+RUN ln -s /usr/bin/python3 /usr/bin/python
 WORKDIR /usr/local/src
 RUN git clone --depth 1 https://github.com/neovim/neovim.git
 WORKDIR /usr/local/src/neovim
@@ -84,4 +85,5 @@ RUN mkdir -p /root/.random
 RUN curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 RUN sh ./installer.sh /root/.random || echo "Failed."
 COPY init.vim /root/.config/nvim/init.vim 
+COPY tmux.conf /root/.tmux.conf
 RUN nvim +UpdateRemotePlugins +qall
