@@ -78,10 +78,9 @@ RUN git reset --hard v0.2.0
 RUN make CMAKE_BUILD_TYPE=Release
 RUN make install
 RUN rm -rf /usr/local/src/neovim
-RUN mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-RUN mkdir -p $XDG_CONFIG_HOME/nvim
+RUN mkdir -p /root/.config/nvim
 WORKDIR /tmp
-RUN mkdir -p $HOME/.random
+RUN mkdir -p /root/.random
 RUN curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
-RUN sh ./installer.sh $HOME/.random || echo "Failed."
-COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim 
+RUN sh ./installer.sh /root/.random || echo "Failed."
+COPY init.vim /root/.config/nvim/init.vim 
