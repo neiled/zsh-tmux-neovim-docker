@@ -69,7 +69,7 @@ RUN apt-get install -y \
       python3-pip \
       unzip
 RUN pip3 install --upgrade pip &&\ 
-    pip3 install --user neovim jedi mistune psutil setproctitle virtualenvwrapper yolk3k
+    pip3 install neovim yapf jedi mistune psutil setproctitle virtualenvwrapper yolk3k
 WORKDIR /usr/local/src
 RUN git clone --depth 1 https://github.com/neovim/neovim.git
 WORKDIR /usr/local/src/neovim
@@ -78,4 +78,10 @@ RUN git reset --hard v0.2.0
 RUN make CMAKE_BUILD_TYPE=Release
 RUN make install
 RUN rm -rf /usr/local/src/neovim
-
+RUN mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
+RUN mkdir -p $XDG_CONFIG_HOME/nvim
+WORKDIR /tmp
+RUN mkdir -p $HOME/.random
+RUN curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
+RUN sh ./installer.sh $HOME/.random || echo "Failed."
+COPY init.vim $XDG_CONFIG_HOME/nvim/init.vim 
