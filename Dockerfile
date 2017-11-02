@@ -84,3 +84,4 @@ RUN mkdir -p /root/.random
 RUN curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 RUN sh ./installer.sh /root/.random || echo "Failed."
 COPY init.vim /root/.config/nvim/init.vim 
+RUN nvim +UpdateRemotePlugins +qall
