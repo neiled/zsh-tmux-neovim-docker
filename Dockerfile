@@ -30,6 +30,7 @@ RUN apt-get update && apt-get install -y \
       tzdata \
       wget \
       zsh 
+RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN chsh -s /usr/bin/zsh
 
 # Install docker
