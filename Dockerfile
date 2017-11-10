@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -y \
       zsh 
 RUN wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh || true
 RUN chsh -s /usr/bin/zsh
+COPY andrlik.zsh-theme /root/.oh-my-zsh/themes/andrlik.zsh-theme
+COPY zshrc /root/.zshrc
 
 # Install docker
 RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D &&\
