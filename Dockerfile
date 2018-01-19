@@ -49,18 +49,6 @@ RUN add-apt-repository ppa:longsleep/golang-backports
 RUN apt-get update
 RUN apt-get install -y golang-1.8-go
 
-# Install tmux
-WORKDIR /usr/local/src
-RUN wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
-RUN tar xzvf tmux-2.6.tar.gz
-WORKDIR /usr/local/src/tmux-2.6
-RUN ./configure
-RUN make 
-RUN make install
-RUN rm -rf /usr/local/src/tmux*
-RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-COPY tmux.conf /root/.tmux.conf
-RUN ~/.tmux/plugins/tpm/bin/install_plugins
 
 # Install neovim
 RUN apt-get install -y \
@@ -90,6 +78,23 @@ WORKDIR /tmp
 RUN mkdir -p /root/.random
 RUN curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 RUN sh ./installer.sh /root/.random || echo "Failed."
+
+# Install tmux
+WORKDIR /usr/local/src
+RUN wget https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz
+RUN tar xzvf tmux-2.6.tar.gz
+WORKDIR /usr/local/src/tmux-2.6
+RUN ./configure
+RUN make 
+RUN make install
+RUN rm -rf /usr/local/src/tmux*
+
+# tmux plugins
+RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+COPY tmux.conf /root/.tmux.conf
+RUN ~/.tmux/plugins/tpm/bin/install_plugins
+
+# vim plugins
 COPY init.vim /root/.config/nvim/init.vim 
 RUN nvim +UpdateRemotePlugins +qall
 RUN echo "export VAULT_ADDR=http://vaultserver:8200" >> /root/.zshrc
