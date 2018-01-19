@@ -92,3 +92,9 @@ COPY tmux.conf /root/.tmux.conf
 RUN nvim +UpdateRemotePlugins +qall
 RUN echo "export VAULT_ADDR=http://vaultserver:8200" >> /root/.zshrc
 RUN wget https://releases.hashicorp.com/vault/0.8.3/vault_0.8.3_linux_amd64.zip && unzip vault_0.8.3_linux_amd64.zip && cp vault /usr/bin/ 
+
+WORKDIR /usr/local/src
+RUN git clone --depth 1 https://github.com/tj/n.git
+WORKDIR /usr/local/src/n
+RUN make install
+RUN n latest
