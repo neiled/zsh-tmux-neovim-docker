@@ -59,6 +59,7 @@ RUN make
 RUN make install
 RUN rm -rf /usr/local/src/tmux*
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+COPY tmux.conf /root/.tmux.conf
 RUN ~/.tmux/plugins/tpm/bin/install_plugins
 
 # Install neovim
@@ -90,7 +91,6 @@ RUN mkdir -p /root/.random
 RUN curl https://raw.githubusercontent.com/Shougo/dein.vim/master/bin/installer.sh > installer.sh
 RUN sh ./installer.sh /root/.random || echo "Failed."
 COPY init.vim /root/.config/nvim/init.vim 
-COPY tmux.conf /root/.tmux.conf
 RUN nvim +UpdateRemotePlugins +qall
 RUN echo "export VAULT_ADDR=http://vaultserver:8200" >> /root/.zshrc
 RUN wget https://releases.hashicorp.com/vault/0.8.3/vault_0.8.3_linux_amd64.zip && unzip vault_0.8.3_linux_amd64.zip && cp vault /usr/bin/ 
