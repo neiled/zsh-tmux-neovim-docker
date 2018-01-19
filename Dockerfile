@@ -59,6 +59,7 @@ RUN make
 RUN make install
 RUN rm -rf /usr/local/src/tmux*
 RUN git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+RUN ~/.tmux/plugins/tpm/bin/install_plugins
 
 # Install neovim
 RUN apt-get install -y \
