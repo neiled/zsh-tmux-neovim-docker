@@ -42,12 +42,13 @@ RUN apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 581
       apt-get update &&\
       apt-get install -y docker-engine
 RUN  curl -o /usr/local/bin/docker-compose -L "https://github.com/docker/compose/releases/download/1.18.0/docker-compose-$(uname -s)-$(uname -m)" &&\
-     chmod +x /usr/local/bin/docker-compose
+      chmod +x /usr/local/bin/docker-compose
 
 # Install go
 RUN add-apt-repository ppa:longsleep/golang-backports
 RUN apt-get update
 RUN apt-get install -y golang-1.8-go
+RUN ln -s /usr/lib/go-1.8/bin/go /usr/bin/go
 
 
 # Install neovim
@@ -63,7 +64,7 @@ RUN apt-get install -y \
       python3-pip \
       unzip
 RUN pip3 install --upgrade pip &&\ 
-    pip3 install neovim yapf jedi mistune psutil setproctitle virtualenvwrapper yolk3k
+      pip3 install neovim yapf jedi mistune psutil setproctitle virtualenvwrapper yolk3k
 RUN ln -s /usr/bin/python3 /usr/bin/python
 WORKDIR /usr/local/src
 RUN git clone --depth 1 https://github.com/neovim/neovim.git
