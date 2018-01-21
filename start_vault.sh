@@ -3,6 +3,10 @@ docker run -d --name consul      -p 8500:8500     consul:latest     agent -dev -
 docker run -d --name vault   --link consul:consul   -p 8200:8200 --cap-add IPC_LOCK --volumes-from config  vault:latest server -config=/config/vault.hcl
 alias vault='docker exec -it vault vault "$@"'
 docker exec -it vault vault init -address=${VAULT_ADDR} > keys.txt
+while [ ! -f /keys.txt ]
+do
+  sleep 2
+done
 docker exec -it vault vault unseal -address=${VAULT_ADDR} $(grep 'Key 1:' keys.txt | awk '{print $NF}')
 docker exec -it vault vault unseal -address=${VAULT_ADDR} $(grep 'Key 2:' keys.txt | awk '{print $NF}')
 docker exec -it vault vault unseal -address=${VAULT_ADDR} $(grep 'Key 3:' keys.txt | awk '{print $NF}')
